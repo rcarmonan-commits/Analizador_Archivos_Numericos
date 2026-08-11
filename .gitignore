@@ -1,0 +1,19 @@
+# Configuración general de Java y Maven
+target/
+*.class
+
+# Archivos y carpetas generadas por IDEs (Eclipse, VS Code, IntelliJ)
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+bin/
+.vscode/
+
+# Archivos del SO
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos generados por scripts que no son parte del codigo
+recrear_git.ps1
