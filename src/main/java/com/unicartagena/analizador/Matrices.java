@@ -84,3 +84,4 @@ public class Matrices {
         }
     }
 }
+// Fix: Variable temporal implementada correctamente
