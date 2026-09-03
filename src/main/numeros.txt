@@ -1,0 +1,21 @@
+=== REPORTE ESTADISTICO ===
+Archivo origen: ..\..\..\numeros.txt
+Cantidad de datos leidos: 12
+
+Minimo: 1
+Maximo: 90
+Promedio: 43.916666666666664
+
+=== DATOS ORDENADOS ===
+1
+7
+12
+19
+23
+33
+45
+56
+64
+88
+89
+90

@@ -1,182 +1,246 @@
-# Analizador Archivos Numéricos
+# Actividad Unidad 1 - Protocolo Individual
 
-## 👤 1. Presentación
-
-**Nombre del Alumno:** Rosary Carmona
-**Programa:** Ingeniería de Software
 **Asignatura:** Estructuras de Datos
-**Actividad:** Actividad 6 - Analizador de Archivos Numéricos y Arreglos/Matrices
+**Programa:** Ingeniería de Software
+**Institución:** Universidad de Cartagena
+**Estudiante:** Rosary Carmona
+**Tutor:** John Carlos Arrieta Arrieta
 
 ---
 
-## 📖 2. Introducción
+## Presentación
+
+Hola, mi nombre es Rosary Carmona. Presento a continuación mi desarrollo para la actividad de arreglos y matrices correspondiente a la Unidad 1.
+
+---
+
+## Introducción
 
 El presente proyecto documenta el aprendizaje fundamental y práctico de la manipulación de arreglos estáticos, matrices bidimensionales y la lectura de archivos de texto en Java. A través del uso de herramientas de control de versiones y metodologías modernas, se da solución a los ejercicios propuestos en la rúbrica (Ejemplo 1, Matrices y Ejercicio 6), mostrando el control del flujo de ejecución y manejo de índices.
 
 ---
 
-## 🎯 3. Objetivos
+## Objetivos
 
-* **Objetivo General:** Desarrollar habilidades lógicas para el manejo, manipulación y persistencia de información haciendo uso de estructuras de datos estáticas en el lenguaje Java, aplicando buenas prácticas de desarrollo y control de versiones.
-* **Objetivos Específicos:**
-  * Implementar recorridos y modificaciones sobre arreglos unidimensionales para alterar sus datos usando condicionales.
-  * Crear y manipular matrices bidimensionales mediante la impresión en tabla y el intercambio posicional de sus filas.
-  * Diseñar un analizador de datos que interactúe con el sistema de archivos del sistema operativo (lectura/escritura) y extraiga estadísticas matemáticas (mínimo, máximo, promedio).
-  * Controlar las modificaciones de código bajo el sistema Git, aislando el trabajo en ramas (branches) independientes y fusionándolas de forma segura.
+**Objetivo General:**
+Desarrollar habilidades lógicas para el manejo, manipulación y persistencia de información haciendo uso de estructuras de datos estáticas en el lenguaje Java, aplicando buenas prácticas de desarrollo y control de versiones.
 
----
-
-## 🛠 4. Justificación
-
-El estudio de las estructuras de datos debe materializarse en la solución de problemas concretos. Dominar los arreglos (arrays) es el paso fundamental antes de entrar en estructuras dinámicas de datos como Listas, Pilas o Árboles, ya que enseñan al desarrollador cómo funciona la memoria indexada y cómo ocurren los errores de desbordamiento (IndexOutOfBoundsException).
-
-Elegir el **Analizador de Archivos Numéricos (Ejercicio 6)** como núcleo central obliga a llevar los arreglos más allá del entorno de la consola; requiriendo leer información externa (txt), parsearla, procesarla algorítmicamente y guardar un reporte. Finalmente, documentar y simular escenarios de vida real con Git ayuda a formar un perfil profesional competente y resiliente en un entorno corporativo.
+**Objetivos Específicos:**
+- Implementar recorridos y modificaciones sobre arreglos unidimensionales para alterar sus datos usando condicionales.
+- Crear y manipular matrices bidimensionales mediante la impresión en tabla y el intercambio posicional de sus filas.
+- Diseñar un analizador de datos que interactúe con el sistema de archivos del sistema operativo (lectura/escritura) y extraiga estadísticas matemáticas (mínimo, máximo, promedio).
+- Controlar las modificaciones de código bajo el sistema Git, aislando el trabajo en ramas (branches) independientes y fusionándolas de forma segura.
 
 ---
 
-## 💻 5. Desarrollo de la Actividad (Guía Paso a Paso con Código)
+## Justificación
 
-Como estudiante de cuarto semestre y siendo aún principiante en el vasto mundo de Java, decidí abordar esta actividad paso a paso. Para mí fue fundamental dividir el problema en partes más pequeñas para entender bien cómo funcionan las estructuras de datos en la memoria. A continuación presento mi proceso lógico y de desarrollo detallado:
+El estudio de las estructuras de datos debe materializarse en la solución de problemas concretos. Dominar los arreglos (arrays) es el paso fundamental antes de entrar en estructuras dinámicas de datos como Listas, Pilas o Árboles, ya que enseñan al desarrollador cómo funciona la memoria indexada y cómo ocurren los errores de desbordamiento.
 
-### 🎮 Paso 1: Creación del Menú Principal (Control de Flujo)
-Al analizar la rúbrica, me di cuenta de que teníamos tres ejercicios totalmente distintos (Arreglos, Matrices y el Analizador de Archivos). Para no tener todo desordenado o tener que modificar el código cada vez que quisiera probar uno, decidí crear un **menú interactivo** en la clase principal ([`Main.java`](src/main/java/com/unicartagena/analizador/Main.java)). 
-
-Para lograrlo, instancié un objeto de la clase `Scanner` que me permite capturar la entrada del teclado, y encerré todo en un ciclo iterativo `while`.
-
-```java
-Scanner teclado = new Scanner(System.in);
-int opcion = 0;
-
-while (opcion != 4) {
-    System.out.println("1. Ejecutar Ejercicio 1 (Arreglos)");
-    // ... más opciones (omitidas por brevedad) ...
-    
-    // Validación para evitar caídas
-    if (!teclado.hasNextInt()) {
-        System.out.println("Error: Por favor escriba solo números enteros.");
-        teclado.next(); 
-        continue; 
-    }
-    opcion = teclado.nextInt();
-}
-```
-**Mi aprendizaje aquí:** El mayor reto fue darme cuenta de que si el usuario escribía una letra (como "a") en vez de un número, el programa colapsaba con un error crítico en consola (`InputMismatchException`). Investigando, aprendí a usar `hasNextInt()` para prevenir el error antes de que ocurra, logrando un programa mucho más profesional y robusto.
-
-### 🧮 Paso 2: Entendiendo los Arreglos (Ejercicio 1)
-En la clase [`Arreglos.java`](src/main/java/com/unicartagena/analizador/Arreglos.java), empecé practicando con la estructura de datos más básica: el arreglo unidimensional estático.
-
-1. **Declaración y Reserva de Memoria:** En Java, los arreglos tienen un tamaño fijo. Escribí `int[] numeros = new int[10];` para decirle al computador que reserve exactamente 10 bloques de memoria contiguos.
-2. **Llenado automático:** Para no escribir 10 números a mano, instancié la clase `Random`. Luego usé un ciclo `for` tradicional para recorrer desde el índice `0` hasta el `9` (`numeros.length - 1`), inyectando números aleatorios del 1 al 100.
-3. **Modificación Lógica (El reto de los impares):** La guía me pedía cambiar los números impares a cero. 
-```java
-for (int i = 0; i < numeros.length; i++) {
-    // Si el residuo de dividir entre 2 NO es cero, es impar
-    if (numeros[i] % 2 != 0) {
-        numeros[i] = 0; 
-    }
-    // Luego, multiplico el valor por su índice actual
-    numeros[i] = numeros[i] * i;
-}
-```
-**Mi aprendizaje aquí:** Comprendí la diferencia abismal entre el *valor* guardado en el cajón (ej. el número 45) y el *índice* o posición de ese cajón (ej. la posición 3). Multiplicar `numeros[i] * i` me obligó a dominar ambos conceptos a la vez.
-
-### 🧩 Paso 3: Dominando las Matrices Bidimensionales (Ejercicio 2)
-Una vez dominé el arreglo lineal, pasé a las matrices en [`Matrices.java`](src/main/java/com/unicartagena/analizador/Matrices.java). Para mí, fue súper útil imaginar la matriz como una tabla de Excel (filas y columnas).
-
-- Declaré una matriz de 3x3 así: `int[][] matriz = new int[3][3];`.
-- Comprendí que para recorrerla ya no bastaba un ciclo `for`, sino que necesitaba **dos ciclos anidados**. El `for` externo (que usa la variable `i`) maneja las filas, y el `for` interno (con la variable `j`) maneja las columnas.
-
-**El reto del intercambio de filas:**
-Se me pidió intercambiar la Fila 0 con la Fila 2. Mi primer instinto fue escribir `matriz[0][j] = matriz[2][j]`, pero al probarlo, me di cuenta de que al hacer eso, ¡los datos originales de la fila 0 se borraban para siempre, y ya no tenía cómo pasarlos a la fila 2!
-La solución fue usar una **variable temporal**:
-```java
-for (int j = 0; j < matriz[0].length; j++) {
-    int temporal = matriz[0][j];      // Guardo el dato de la fila 0 en un "vaso vacío"
-    matriz[0][j] = matriz[2][j];      // Subo el dato de la fila 2
-    matriz[2][j] = temporal;          // Pongo el dato guardado en la fila 2
-}
-```
-Este pequeño algoritmo me pareció fascinante porque me enseñó cómo mover datos en la memoria sin destruirlos.
-
-### 📊 Paso 4: El Reto Principal - Analizador de Archivos (Ejercicio 6)
-Este fue el núcleo de la actividad, desarrollado en [`AnalizadorArchivos.java`](src/main/java/com/unicartagena/analizador/AnalizadorArchivos.java). Ya no jugaría solo en la memoria RAM, sino que mi programa interactuaría leyendo archivos reales del disco duro del computador.
-
-1. **Lectura Dinámica e Interactiva:** Quise agregar valor extra a mi entrega. En lugar de "quemar" el nombre del archivo en el código (ej. obligar a que se llame siempre `numeros.txt`), usé el `Scanner` para preguntarle al usuario cómo se llama el archivo que desea analizar.
-2. **Uso de BufferedReader:** 
-```java
-try (BufferedReader br = new BufferedReader(new FileReader(archivoEntrada))) {
-    String linea;
-    while ((linea = br.readLine()) != null) {
-        numeros[index] = Integer.parseInt(linea.trim());
-        index++;
-    }
-}
-```
-Al usar `BufferedReader` junto con un bloque `try-catch`, aseguré que el archivo de texto se leyera rápidamente línea por línea, y que si ocurre un error (por ejemplo, si escriben mal el nombre del archivo y este no existe), el programa no explote sino que capture la excepción `IOException`. Además, descubrí cómo usar `Integer.parseInt()` para convertir texto plano a números matemáticos reales.
-
-3. **Cálculo de Estadísticas en Tiempo Récord:** 
-Para calcular el mínimo, el máximo y el promedio, no quise hacer tres recorridos lentos. Lo hice todo en un solo ciclo súper optimizado (complejidad `O(N)`), guardando el primer número como referencia inicial y comparando a medida que avanzaba:
-```java
-int minimo = numeros[0];
-int maximo = numeros[0];
-double suma = 0;
-
-for (int num : numeros) {
-    if (num < minimo) minimo = num;
-    if (num > maximo) maximo = num;
-    suma += num;
-}
-double promedio = suma / numeros.length;
-```
-4. **Ordenamiento y Reporte Final:** 
-Para ordenar los números de menor a mayor, aproveché la magia de la librería nativa de Java `Arrays.sort(numeros)`. Finalmente, usé la clase `FileWriter` para generar automáticamente un archivo de texto nuevo llamado `resultados_...`, donde el programa imprime las estadísticas obtenidas y la lista de números ya organizados.
-
-Esta experiencia fue vital para mi formación, porque por primera vez logré conectar la lógica pura (arreglos y cálculos) con la persistencia real (archivos de texto en mi disco duro), una habilidad que entiendo que es esencial para cualquier futuro ingeniero de software.
+Elegir el Analizador de Archivos Numéricos (Ejercicio 6) como núcleo central obliga a llevar los arreglos más allá del entorno de la consola; requiriendo leer información externa (txt), procesarla algorítmicamente y guardar un reporte. Finalmente, documentar y simular escenarios de vida real con Git ayuda a formar un perfil profesional competente y resiliente.
 
 ---
 
-## 🔗 6. Enlace del Repositorio en GitHub y Control de Versiones
+## Fundamentos Teóricos
 
-Todo el código fuente y su respectivo historial de evolución (commits) se encuentran alojados y preservados en la nube:
+### 1. Arreglos (Arrays)
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repositorio_del_Proyecto-181717?style=for-the-badge&logo=github)](https://github.com/rcarmonan-commits/Analizador_Archivos_Numericos)
+- **Concepto de arreglo:** Es una estructura de datos estática que permite almacenar múltiples valores bajo un mismo nombre de variable, organizados secuencialmente en la memoria del computador.
+- **Tipos de datos que puede almacenar:** Puede almacenar cualquier tipo de dato primitivo (como int, double, char, boolean) o tipos referenciados (objetos como String u objetos de clases personalizadas). Sin embargo, todos los elementos dentro de un mismo arreglo deben ser obligatoriamente del mismo tipo.
+- **Diferencia entre tamaño fijo y dinámico según el lenguaje:** En lenguajes de tipado estricto como Java o C, los arreglos convencionales tienen un **tamaño fijo**; una vez declarados (ej. 10 posiciones), su tamaño en memoria no puede expandirse ni encogerse. En lenguajes dinámicos como JavaScript o Python, las estructuras equivalentes (listas) son **dinámicas**, lo que significa que pueden crecer y encogerse en tiempo de ejecución de manera automática.
+- **Indexación y posiciones:** Los arreglos utilizan un índice numérico para acceder a sus elementos. En Java, la indexación está basada en cero (0-indexed), es decir, el primer elemento se encuentra en la posición 0 y el último en la posición tamaño - 1.
+- **Operaciones básicas:**
+  - **Declaración:** Consiste en definir el tipo de arreglo y su nombre (ej. `int[] numeros;`).
+  - **Inicialización:** Consiste en instanciar el arreglo en memoria asignándole su tamaño (ej. `numeros = new int[10];`) o sus valores iniciales.
+  - **Recorrido:** Visitar cada elemento iterativamente, generalmente usando bucles como for o for-each.
+  - **Modificación:** Acceder a un índice específico mediante corchetes para reasignar su valor (ej. `numeros[2] = 15;`).
 
-### 🌳 Historial de Desarrollo (Commits y Ramas)
-El proyecto se desarrolló de forma progresiva, utilizando ramas (branching) para el desarrollo de módulos individuales y aplicando correcciones lógicas en tiempo real (bugfixes):
+### 2. Matrices (Arrays bidimensionales)
 
-1. `iniciando el proyecto maven y configuracion inicial` *(Commit en rama: `main`)*
-2. `creando el archivo readme con la presentacion y objetivos de la actividad` *(Commit en rama: `main`)*
-3. `feat(ejemplo1): desarrollando practicas basicas de arreglos y creacion del menu` *(Commit en rama: `rama-ejemplo1`)*
-4. `fix: corrigiendo error de indice fuera de limites al recorrer el arreglo` *(Commit en rama: `rama-ejemplo1`)*
-5. `Merge branch 'rama-ejemplo1'` *(Fusión de la rama a `main`)*
-6. `desarrollando la creacion e impresion basica de matrices 3x3` *(Commit en rama: `rama-matrices`)*
-7. `fix: solucionando bug en el intercambio de filas que sobreescribia y borraba los datos originales` *(Commit en rama: `rama-matrices`)*
-8. `Merge branch 'rama-matrices'` *(Fusión de la rama a `main`)*
-9. `creando la logica del analizador de archivos numericos con lectura dinamica` *(Commit en rama: `rama-ejercicio6`)*
-10. `fix: solucionando caida critica (FileNotFoundException) al intentar leer un archivo que no existia` *(Commit en rama: `rama-ejercicio6`)*
-11. `refactor: agregando ultimos comentarios de sustentacion para el profesor y merge final` *(Merge final a `main`)*
-
----
-
-## 🎥 7. Enlace del Video de Sustentación
-
-El siguiente recurso audiovisual expone la defensa del proyecto, la compilación del código Java y la revisión en tiempo real de los reportes generados.
-
-> [!IMPORTANT]  
-> **Video Explicativo:** [ Insertar URL de YouTube / Google Drive aquí ]
+- **Concepto de matriz:** Es un arreglo de arreglos, formando una estructura de datos cuadriculada que permite almacenar información en dos dimensiones (bidimensional).
+- **Representación en memoria (fila-columna):** Las matrices se organizan lógicamente en un plano cartesiano de filas y columnas, donde el primer índice siempre representa la Fila y el segundo índice representa la Columna (ej. `matriz[fila][columna]`).
+- **Declaración e inicialización:** Se declaran añadiendo un par de corchetes adicional (ej. `int[][] matriz;`) y se inicializan asignando tamaño a ambas dimensiones (ej. `matriz = new int[3][3];`).
+- **Recorridos por filas y columnas:** Requieren obligatoriamente estructuras iterativas anidadas (un ciclo dentro de otro). El ciclo externo comúnmente itera sobre las filas y el ciclo interno sobre las columnas.
+- **Matrices irregulares:** Son matrices donde no todas las filas tienen la misma cantidad de columnas. En Java son totalmente viables porque las matrices son arreglos de arreglos independientes.
 
 ---
 
-## ⚖️ 8. Comparativa de Lenguajes (Java vs Lenguajes Dinámicos)
+## Desarrollo
 
-Como parte de la investigación requerida en la actividad, realicé una comparativa para entender por qué en Java declaramos los arreglos y las variables de forma tan estricta, en contraste con otros lenguajes modernos como Python o JavaScript que he visto por encima.
+A continuación presento mi proceso lógico y de desarrollo detallado para dar respuesta a los requerimientos:
 
-1. **Lenguajes Estáticos vs Dinámicos:**
-   - **Java es Estático:** Cuando escribí `int[] numeros = new int[10];`, tuve que decirle al computador explícitamente desde el principio que iban a ser `int` (enteros) y que el tamaño era `10`. Si el programa está corriendo y quiero guardar una palabra o agrandarlo a 11, Java me detiene y arroja un error en tiempo de compilación. La ventaja de esto es que previene muchísimos errores antes de siquiera probar el programa.
-   - **Python es Dinámico:** En un lenguaje dinámico, simplemente diría `numeros = []` y el computador asume el tipo en tiempo de ejecución. Puede crecer infinitamente y mezclar letras con números. Aunque es más fácil para novatos, es más propenso a errores silenciosos si uno no tiene cuidado.
+### Paso 1: Creación del Proyecto Java (Maven) y Menú Principal
 
-2. **Tipado Fuerte vs Tipado Débil:**
-   - **Java es de Tipado Fuerte:** Si intento sumar un número con un texto sin convertirlo explícitamente (como me tocó hacer con `Integer.parseInt(linea)` en el analizador de archivos), Java me rechaza la operación. No asume cosas a mis espaldas.
-   - **Tipado Débil (Ej. JavaScript):** En JavaScript, si sumo `5 + "5"`, el lenguaje no explota, sino que asume que quiero concatenar y me devuelve `"55"`, lo cual puede ser un dolor de cabeza enorme si yo realmente quería que la respuesta fuera `10`.
+Al analizar la rúbrica, decidí inicializar el repositorio utilizando la estructura estándar de **Maven** y apoyándome en mi IDE de preferencia (Visual Studio Code) para estructurar el proyecto en Java. Luego, procedí a crear un menú interactivo en la clase principal (`Main.java`) para los tres ejercicios solicitados. Para lograrlo, instancié un objeto de la clase `Scanner` que permite capturar la entrada del teclado, y encerré todo en un ciclo iterativo `while`. Validé la entrada de datos (usando `hasNextInt`) para evitar caídas del programa si el usuario ingresaba letras en vez de números.
 
-**Conclusión:** Aprender Estructuras de Datos en un lenguaje *Estático y Fuerte* como Java es mucho mejor para nosotros los estudiantes, porque nos obliga a entender cómo funciona realmente la memoria del computador y nos entrena para escribir código disciplinado, seguro y predecible.
+```
+C:\Analizador_Archivos_Numericos> java Main
+
+--- MENU PRINCIPAL ---
+1. Arreglos
+2. Matrices
+3. Analizador de Archivos Numericos
+4. Salir
+Ingrese una opcion:
+```
+
+### Paso 2: Entendiendo los Arreglos (Ejercicio 1)
+
+En la clase [`Arreglos.java`](src/main/java/com/unicartagena/analizador/Arreglos.java) desarrollé punto a punto los requerimientos:
+
+1. **Declaración e Inicialización:** Escribí `int[] numeros = new int[10];` para crear el arreglo de 10 enteros. Lo inicialicé usando la clase `Random` para inyectar valores aleatorios.
+2. **Recorrido y Visualización:**
+   - Utilicé un **bucle for clásico** iterando desde `i = 0` hasta `numeros.length - 1` para imprimir las posiciones e índices.
+   - Utilicé un **bucle for-each** (`for (int num : numeros)`) para recorrer e imprimir el arreglo de manera más limpia extrayendo únicamente sus valores.
+3. **Modificación:** Recorrí el arreglo con un condicional para cambiar todos los valores impares por cero (`if (numeros[i] % 2 != 0) numeros[i] = 0;`). Posteriormente, multipliqué todos los valores por su propio índice (`numeros[i] = numeros[i] * i;`).
+4. **Búsqueda Lineal:** Implementé un algoritmo de búsqueda lineal (secuencial) iterando todo el arreglo con un for y una bandera boolean para encontrar si se almacenó algún valor igual a cero en el paso anterior.
+
+```
+--- EJERCICIO 1 - ARREGLOS UNIDIMENSIONALES ---
+--- 1. Declaracion y creacion ---
+Arreglo creado con 10 posiciones e inicializado aleatoriamente.
+--- 2. Recorrido clasico (for) ---
+Posicion [0] = 45
+Posicion [1] = 12 ...
+--- 3. Modificacion ---
+Valores impares cambiados a cero y multiplicados por su indice.
+Posicion [0] = 0
+Posicion [1] = 0 ...
+--- 4. Busqueda Lineal ---
+Se encontraron 6 valores en cero.
+```
+
+### Paso 3: Dominando las Matrices Bidimensionales (Ejercicio 2)
+
+En la clase [`Matrices.java`](src/main/java/com/unicartagena/analizador/Matrices.java) desarrollé las siguientes actividades requeridas:
+
+1. **Declaración e Inicialización:** Creé una matriz de 3x3 (`int[][] matriz = new int[3][3];`) y la llené automáticamente con valores aleatorios del 1 al 9 usando la clase `Random`.
+2. **Recorridos:**
+   - Imprimí la matriz original iterando sus filas y columnas para lograr una salida en forma de tabla (tabular).
+   - Realicé un recorrido vertical por columnas invirtiendo el orden de los ciclos for (iterando el ciclo externo por columnas y el interno por filas).
+3. **Operaciones:**
+   - Sumé todos los elementos utilizando un acumulador (`sumatoria += matriz[i][j]`) dentro del ciclo.
+   - Intercambié posicionalmente la primera fila (0) con la última fila (2), utilizando una variable temporal auxiliar para no perder los datos del array durante el reemplazo en memoria.
+
+```
+--- EJERCICIO 2 - MATRICES BIDIMENSIONALES ---
+--- 1. Declaracion e inicializacion ---
+Matriz de 3x3 inicializada aleatoriamente:
+4  7  1
+9  3  8
+2  6  5
+--- 3. Operaciones ---
+Sumatoria total: 45
+Intercambio de primera y ultima fila exitoso.
+```
+
+### Paso 4: El Reto Principal — Analizador de Archivos (Ejercicio 6)
+
+Desarrollado en [`AnalizadorArchivos.java`](src/main/java/com/unicartagena/analizador/AnalizadorArchivos.java). El programa interactúa leyendo archivos reales del disco duro:
+
+1. **Lectura Dinámica:** Pedí al usuario que ingresara el nombre del archivo de texto.
+2. **Uso de BufferedReader:** Usé un bloque try-catch con `BufferedReader` y `FileReader` para leer línea por línea, convirtiendo el texto a números con `Integer.parseInt()`.
+3. **Cálculo de Estadísticas:** En un solo ciclo optimizado guardé el mínimo, máximo y la sumatoria acumulada. Al final dividí por la longitud para hallar el promedio.
+4. **Ordenamiento y Reporte Final:** Ordené el arreglo con `Arrays.sort()` y generé un reporte en un nuevo archivo txt usando `FileWriter`.
+
+```
+--- EJERCICIO 6 - ANALIZADOR DE ARCHIVOS NUMERICOS ---
+Ingrese la ruta completa o el nombre (ej. numeros.txt): prueba.txt
+Atencion: El archivo o ruta 'prueba.txt' no existe.
+Desea que lo creemos automaticamente con numeros de prueba? (s/n): s
+Archivo creado exitosamente con 20 numeros!
+
+Estadisticas calculadas con exito:
+- Minimo: 3
+- Maximo: 98
+- Promedio: 45.2
+-> Los resultados han sido guardados en 'resultados_prueba.txt'.
+```
+
+### Paso 5: Implementación de Control de Versiones con Git
+
+Para cumplir con las exigencias metodológicas de la actividad, todo el desarrollo se versionó utilizando Git y alojando el código en un repositorio local y remoto en GitHub. Se respetó un flujo de trabajo estricto basado en ramas (branching) para aislar cada ejercicio antes de integrarlo a la rama principal.
+
+A continuación, se evidencian los comandos exactos ejecutados en la terminal para cada una de las funcionalidades:
+
+**1. Para el Ejercicio de Arreglos (Paso 2 del desarrollo):**
+```bash
+git switch main
+git pull
+git switch -c rama-ejemplo1
+git status
+git add .
+git commit -m "feat(ejemplo1): desarrollando practicas basicas de arreglos"
+git push origin rama-ejemplo1
+git switch main
+git pull
+git merge rama-ejemplo1
+git push origin main
+```
+
+**2. Para el Ejercicio de Matrices (Paso 3 del desarrollo):**
+```bash
+git switch main
+git pull
+git switch -c rama-matrices
+git status
+git add .
+git commit -m "feat(matrices): desarrollando la creacion e impresion basica de matrices 3x3"
+git push origin rama-matrices
+git switch main
+git pull
+git merge rama-matrices
+git push origin main
+```
+
+**3. Para el Reto Principal (Paso 4 del desarrollo):**
+```bash
+git switch main
+git pull
+git switch -c rama-ejercicio6
+git status
+git add .
+git commit -m "feat(ejercicio6): creando la logica del analizador de archivos numericos"
+git push origin rama-ejercicio6
+git switch main
+git pull
+git merge rama-ejercicio6
+git push origin main
+```
+
+Al aplicar este ciclo de manera rigurosa, se garantizó un historial limpio, trazable y estructurado, evitando conflictos y evidenciando el uso correcto de Git como herramienta profesional.
+
+### Comparativa de Lenguajes (Java vs Lenguajes Dinámicos)
+
+1. **Lenguajes Estáticos vs Dinámicos:** Java es estático. Al declarar un arreglo, definimos explícitamente el tipo de dato y su tamaño fijo. Lenguajes dinámicos permiten arreglos flexibles, pero Java previene errores de desbordamiento y tipos en tiempo de compilación.
+2. **Tipado Fuerte vs Tipado Débil:** Java es de tipado fuerte. No permite sumar un texto y un entero sin conversión explícita, a diferencia de lenguajes de tipado débil que concatenan valores inesperadamente. Esto educa al programador a escribir código seguro y estructurado.
+
+---
+
+## Enlace del repositorio público de GitHub
+
+https://github.com/rcarmonan-commits/Analizador_Archivos_Numericos
+
+### 🌳 Árbol de commits (git log --oneline --graph)
+
+```text
+*   220dc66 Merge branch 'rama-ejercicio6'
+|\  
+| * 2094288 feat(ejercicio6): creando la logica del analizador de archivos numericos
+|/  
+*   057fe05 Merge branch 'rama-matrices'
+|\  
+| * 10c4399 feat(matrices): desarrollando la creacion e impresion basica de matrices 3x3
+|/  
+*   2762001 Merge branch 'rama-ejemplo1'
+|\  
+| * e5b7f09 feat(ejemplo1): desarrollando practicas basicas de arreglos
+|/  
+* 29134cc feat: iniciando el proyecto maven y configuracion inicial
+```
+
+---
+
+## Enlace del video de sustentación
+
+[ Inserte aquí el enlace de YouTube / Google Drive con el video explicando el código, probando la ejecución y mostrando el rostro y voz del alumno ]
