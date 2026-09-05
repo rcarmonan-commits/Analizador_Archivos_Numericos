@@ -1,11 +1,15 @@
-# Analizador Archivos Numéricos
+# Protocolo Actividad de Aprendizaje Individual - Unidad 1
+**Asignatura:** Estructuras de Datos  
+**Programa:** Ingeniería de Software (4to Semestre)  
+**Institución:** Universidad de Cartagena  
+**Estudiante:** Rosary Carmona  
+**Tutor:** John Carlos Arrieta Arrieta  
+**Actividad:** Actividad 6 - Analizador de Archivos Numéricos y Arreglos/Matrices
+
+---
 
 ## 👤 1. Presentación
-
-**Nombre del Alumno:** Rosary Carmona
-**Programa:** Ingeniería de Software
-**Asignatura:** Estructuras de Datos
-**Actividad:** Actividad 6 - Analizador de Archivos Numéricos y Arreglos/Matrices
+Hola, mi nombre es Rosary Carmona. Presento a continuación mi desarrollo para la actividad de arreglos y matrices.
 
 ---
 
