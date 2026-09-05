@@ -1,4 +1,4 @@
-# Protocolo Actividad de Aprendizaje Individual - Unidad 1
+# Protocolo de Aprendizaje Individual - Unidad 1
 **Asignatura:** Estructuras de Datos  
 **Programa:** Ingeniería de Software (4to Semestre)  
 **Institución:** Universidad de Cartagena  
@@ -143,7 +143,7 @@ Esta experiencia fue vital para mi formación, porque por primera vez logré con
 
 Todo el código fuente y su respectivo historial de evolución (commits) se encuentran alojados y preservados en la nube:
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repositorio_del_Proyecto-181717?style=for-the-badge&logo=github)](https://github.com/rcarmonan-commits/Analizador_Archivos_Numericos)
+- **Enlace del repositorio público de GitHub:** [https://github.com/rcarmonan-commits/Analizador_Archivos_Numericos](https://github.com/rcarmonan-commits/Analizador_Archivos_Numericos)
 
 ### 🌳 Historial de Desarrollo (Commits y Ramas)
 El proyecto se desarrolló de forma progresiva, utilizando ramas (branching) para el desarrollo de módulos individuales y aplicando correcciones lógicas en tiempo real (bugfixes):
