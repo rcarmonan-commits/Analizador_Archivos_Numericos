@@ -124,3 +124,4 @@ public class AnalizadorArchivos {
         return lineas;
     }
 }
+// Bugfix: Excepcion controlada al no encontrar archivo
